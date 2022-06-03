@@ -25,36 +25,36 @@ public:
 	}
 
 	//		Constructors:
-	explicit String(int size = 80)
+	explicit String(int size = 80):size(size), str(new char[size] {})
 	{
-		this->size = size;
-		this->str = new char[size] {};
+		//this->size = size;
+		//this->str = new char[size] {};
 		cout << "Def1aConstructor:\t" << this << endl;
 	}
-	String(const char* str)
+	String(const char* str):size(strlen(str)+1), str(new char[size]{})
 	{
-		this->size = strlen(str) + 1;
-		this->str = new char[size] {};
+		//this->size = strlen(str) + 1;
+		//this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = str[i];
 		cout << "Constructor:\t" << this << endl;
 	}
-	String(const String& other)
+	String(const String& other):size(other.size), str(new char[size] {})
 	{
 		//CopyConstructor должен выполнять DeepCopy (Побитовое копирование)
 		//т.е. , выделить новую память и скопировать в нее содержимое другого объекта
-		this->size = other.size;
-		this->str = new char[size] {};
+		//this->size = other.size;
+		//this->str = new char[size] {};
 		for (int i = 0; i < size; i++)
 		{
 			this->str[i] = other.str[i];
 		}
 		cout << "CopyConstructor:" << this << endl;
 	}
-	String(String&& other)
+	String(String&& other):size(other.size), str(other.str)
 	{
 		//поверхностное копирование
-		this->size = other.size;
-		this->str = other.str;
+		//this->size = other.size;
+		//this->str = other.str;
 		other.size = 0;
 		other.str = nullptr; //зануляем адрес памяти в другом объекте
 		cout << "MoveConstructor:\t" << this << endl;
@@ -132,6 +132,7 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 //#define CONSTRUCTORS_CHECK
 //#define MOVE_METHODS_CHECK
 
+
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -176,9 +177,11 @@ void main()
 	String str1;	// – конструктор по умолчанию
 	String str2(55);// -конструктор с 1 параметром
 	String str3 = "Hello";// с 1 параметром(const char* || const char[])
+	str3.print();
 	String str4 = str3; //конструктор копирования
 	String str5;
 	str5 = str4; //оператор присваивания
+	str5.print();
 	String str6();  //не вызывается никаких конструкторов и не создается объект.Здесь объявляется функция str6(), которая ничего не принимает и возвращает объект класса string
 	String str7{}; //явный вызов конструктора по умолчанию
 
