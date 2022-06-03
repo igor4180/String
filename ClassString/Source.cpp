@@ -31,23 +31,17 @@ public:
 		//this->str = new char[size] {};
 		cout << "Def1aConstructor:\t" << this << endl;
 	}
-	String(const char* str):size(strlen(str)+1), str(new char[size]{})
+	String(const char* str):String(strlen(str)+1)
 	{
 		//this->size = strlen(str) + 1;
 		//this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = str[i];
 		cout << "Constructor:\t" << this << endl;
 	}
-	String(const String& other):size(other.size), str(new char[size] {})
+	String(const String& other):String(other.str)
 	{
 		//CopyConstructor должен выполнять DeepCopy (Побитовое копирование)
 		//т.е. , выделить новую память и скопировать в нее содержимое другого объекта
-		//this->size = other.size;
-		//this->str = new char[size] {};
-		for (int i = 0; i < size; i++)
-		{
-			this->str[i] = other.str[i];
-		}
 		cout << "CopyConstructor:" << this << endl;
 	}
 	String(String&& other):size(other.size), str(other.str)
@@ -130,8 +124,8 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 }
 
 //#define CONSTRUCTORS_CHECK
-//#define MOVE_METHODS_CHECK
-
+#define MOVE_METHODS_CHECK
+//#define CALLING_CONSTRUCTORS
 
 void main()
 {
@@ -173,6 +167,7 @@ void main()
 	cout << delimiter << endl;
 #endif
 
+#ifdef CALLING_CONSTRUCTORS
 	//Способы вызова и написания конструкторов
 	String str1;	// – конструктор по умолчанию
 	String str2(55);// -конструктор с 1 параметром
@@ -184,5 +179,5 @@ void main()
 	str5.print();
 	String str6();  //не вызывается никаких конструкторов и не создается объект.Здесь объявляется функция str6(), которая ничего не принимает и возвращает объект класса string
 	String str7{}; //явный вызов конструктора по умолчанию
-
+#endif
 }
